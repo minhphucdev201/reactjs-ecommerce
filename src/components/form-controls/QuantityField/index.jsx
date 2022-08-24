@@ -1,9 +1,8 @@
-import { Box, FormHelperText, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
-import IconButton from '@material-ui/core/IconButton';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { RemoveCircleOutline } from '@material-ui/icons';
-import { AddCircleOutline } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 
@@ -15,59 +14,87 @@ QuantityField.propTypes = {
   disable: PropTypes.bool,
 };
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  box: {
+  root: {
     display: 'flex',
-    flexFlow: 'row nowrap',
     alignContent: 'center',
-    maxWidth: '200px',
+    maxWidth: '150px',
+    flexFlow: 'row nowap',
+    border: '1px solid #ccc',
+
+    '& input': {
+      textAlign: 'center',
+      padding: '0',
+    },
+    '& fieldset': {
+      border: 'none',
+    },
+    '& div': {
+      width: 'calc(40%)',
+      borderRadius: '0',
+      borderLeft: '1px solid #ccc',
+      borderRight: '1px solid #ccc',
+    },
+  },
+  button: {
+    minWidth: 'calc(30%)',
+    padding: '0',
   },
 }));
 function QuantityField(props) {
-  const { form, name, label } = props;
-  const { control, setValue } = form;
+  const { form, name } = props;
   const classes = useStyles();
+  const { setValue } = form;
+
   return (
-    <div>
+    <FormControl error={false} fullWidth variant="outlined" size="small">
+      {/* <InputLabel htmlFor={name}>{label}</InputLabel> */}
+      <Typography>{}</Typography>
       <Controller
         name={name}
-        control={control}
-        render={({
-          field: { onChange, onBlur, value, name },
-          fieldState: { invalid, isTouched, error },
-        }) => (
-          <>
-            <FormControl fullWidth margin="normal" variant="outlined" size="small">
-              <Typography>{label}</Typography>
-              <Box className={classes.box}>
-                <IconButton
-                  onClick={() =>
-                    setValue(name, Number.parseInt(value) ? Number.parseInt(value) - 1 : 1)
-                  }
-                >
-                  <RemoveCircleOutline />
-                </IconButton>
-                <OutlinedInput
-                  id={name}
-                  type="number"
-                  value={value}
-                  onBlur={onBlur}
-                  onChange={onChange}
-                />
-                <IconButton
-                  onClick={() =>
-                    setValue(name, Number.parseInt(value) ? Number.parseInt(value) + 1 : 1)
-                  }
-                >
-                  <AddCircleOutline />
-                </IconButton>
-              </Box>
-            </FormControl>
-            <FormHelperText error={invalid}>{error?.message}</FormHelperText>
-          </>
-        )}
+        control={form.control}
+        render={({ field: { onChange, onBlur, value, name, ref } }) => {
+          return (
+            <Box className={classes.root}>
+              <Button
+                className={classes.button}
+                size="small"
+                // variant="outlined"
+                disabled={value < 2}
+                onClick={() => {
+                  setValue(name, Number.parseInt(value) ? Number.parseInt(value) - 1 : 1);
+                  props?.submitCall();
+                }}
+              >
+                <RemoveIcon />
+              </Button>
+              <OutlinedInput
+                id={name}
+                type="number"
+                onChange={(e) => {
+                  const x = +e.target.value < 1 ? '' : +e.target.value;
+                  setValue(name, x);
+                  props?.submitCall();
+                }}
+                onBlur={onBlur}
+                value={value}
+                variant="none"
+              />
+              <Button
+                className={classes.button}
+                // variant="outlined"
+                onClick={() => {
+                  setValue(name, Number.parseInt(value) ? Number.parseInt(value) + 1 : 1);
+                  props?.submitCall();
+                }}
+              >
+                <AddIcon />
+              </Button>
+            </Box>
+          );
+        }}
       />
-    </div>
+      {/* <FormHelperText>{!!hasError && errors[name]?.message}</FormHelperText> */}
+    </FormControl>
   );
 }
 
