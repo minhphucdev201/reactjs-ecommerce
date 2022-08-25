@@ -88,17 +88,15 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/">Phucs</Link>
+            <Link className={classes.link} to="/">
+              Phucs
+            </Link>
           </Typography>
-          <NavLink to="/todos">
-            <Button variant="outlined" color="inherit">
-              Todo
-            </Button>
+          <NavLink className={classes.link} to="/todos">
+            <Button color="inherit">Todo</Button>
           </NavLink>
-          <NavLink to="/albums" activeClassName="active">
-            <Button color="inherit">Albums</Button>
-          </NavLink>
-          <NavLink to="/products" activeClassName="active">
+
+          <NavLink className={classes.link} to="/products" activeClassName="active">
             <Button color="inherit">Product</Button>
           </NavLink>
           {!isloggedIn && (

@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '150px',
     flexFlow: 'row nowap',
     border: '1px solid #ccc',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
 
     '& input': {
       textAlign: 'center',
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
+    // marginTop: theme.spacing(2),
     minWidth: 'calc(30%)',
     padding: '0',
   },

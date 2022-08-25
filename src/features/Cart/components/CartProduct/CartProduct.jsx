@@ -70,7 +70,7 @@ function CartProduct({ product = {}, quantity = 1 }) {
       </div>
       <div className="cart__remove">
         <span>
-          <DeleteIcon onClick={handleClickOpen} />
+          <DeleteIcon onClick={handleClickOpen} color="primary" />
         </span>
       </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="draggable-dialog-title">

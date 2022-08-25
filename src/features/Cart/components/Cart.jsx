@@ -52,7 +52,7 @@ function Cart(props) {
                 <div className="cart__remove">
                   <p>
                     <span>
-                      <DeleteIcon />
+                      <DeleteIcon color="primary" />
                     </span>
                   </p>
                 </div>
